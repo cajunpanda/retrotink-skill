@@ -1,4 +1,10 @@
-# retrotink
+# retrotink skill
+
+> **Disclaimer:** This is an unofficial, community-made project. It is not affiliated with, endorsed by,
+> or supported by RetroTINK LLC in any way. "RetroTINK" is used only to describe the hardware this tool
+> works with. For official firmware, documentation and support, go to [retrotink.com](https://www.retrotink.com)
+> and RetroTINK's [firmware site](https://retrotink-llc.github.io/firmware/). Back up your SD card before
+> making changes; use at your own risk.
 
 An AI-agent skill (and standalone CLI) for **RetroTINK-4K / 4K CE / 6X** SD cards: backups, firmware
 updates, profile editing, and answers to "what does this setting do?"
