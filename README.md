@@ -16,7 +16,7 @@ updates, profile editing, and answers to "what does this setting do?"
 Paste this prompt into the agent:
 
 ```text
-Install the agent skill from https://github.com/cajunpanda/retrotink as a personal skill named
+Install the agent skill from https://github.com/cajunpanda/retrotink-skill as a personal skill named
 "retrotink", so it's available in every project. Put it in your own skills folder, then run its
 self-test (scripts/rtink selftest, or scripts\rtink.cmd selftest on Windows) and tell me whether
 it worked.
@@ -31,7 +31,7 @@ That's expected, and nothing is installed system-wide.
 ### Chat apps and manual install
 
 **Claude.ai / Claude Desktop app:** download
-**[retrotink.zip](https://github.com/cajunpanda/retrotink/releases/latest/download/retrotink.zip)** and
+**[retrotink.zip](https://github.com/cajunpanda/retrotink-skill/releases/latest/download/retrotink.zip)** and
 upload it under *Settings → Capabilities → Skills*. There Claude can answer setting and tuning questions
 from the bundled manual, but it can't reach your SD card; use a coding agent for backups, firmware and
 profile edits.
@@ -52,13 +52,13 @@ Copilot and Cursor also read `~/.claude/skills`, and Cursor, Gemini CLI and Visu
 
 **With git** (swap the path for your agent's from the table):
 ```bash
-git clone https://github.com/cajunpanda/retrotink ~/.claude/skills/retrotink
+git clone https://github.com/cajunpanda/retrotink-skill ~/.claude/skills/retrotink
 ```
 ```powershell
-git clone https://github.com/cajunpanda/retrotink "$env:USERPROFILE\.claude\skills\retrotink"
+git clone https://github.com/cajunpanda/retrotink-skill "$env:USERPROFILE\.claude\skills\retrotink"
 ```
 
-**Without git:** download **[retrotink.zip](https://github.com/cajunpanda/retrotink/releases/latest/download/retrotink.zip)**
+**Without git:** download **[retrotink.zip](https://github.com/cajunpanda/retrotink-skill/releases/latest/download/retrotink.zip)**
 from the latest release and unzip it into your agent's skills folder from the table (create the folder if
 it doesn't exist). You should end up with `…/skills/retrotink/SKILL.md`. On Windows, `~` means
 `C:\Users\<you>`.
