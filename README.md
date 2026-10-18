@@ -5,7 +5,9 @@ updates, profile editing, and answers to "what does this setting do?"
 
 ## Quick install
 
-Paste this into your AI coding agent (Claude Code, GitHub Copilot, Cursor, Codex, Gemini CLI…):
+### Coding agents (Claude Code, GitHub Copilot, Cursor, Codex, Gemini CLI…)
+
+Paste this prompt into the agent:
 
 ```text
 Install the agent skill from https://github.com/cajunpanda/retrotink as a personal skill named
@@ -20,16 +22,15 @@ Spread do?"*.
 The first self-test may download a private copy of Node.js (~30 MB) if your computer doesn't have it.
 That's expected, and nothing is installed system-wide.
 
+### Chat apps and manual install
+
 **Claude.ai / Claude Desktop app:** download
 **[retrotink.zip](https://github.com/cajunpanda/retrotink/releases/latest/download/retrotink.zip)** and
 upload it under *Settings → Capabilities → Skills*. There Claude can answer setting and tuning questions
-from the bundled manual, but it can't reach your SD card; use a local agent for backups, firmware and
+from the bundled manual, but it can't reach your SD card; use a coding agent for backups, firmware and
 profile edits.
 
-<details>
-<summary>Installing by hand</summary>
-
-It's one folder in the open [Agent Skills](https://agentskills.io) format (`SKILL.md` plus scripts).
+**Any agent, by hand:** it's one folder in the open [Agent Skills](https://agentskills.io) format (`SKILL.md` plus scripts).
 Put it where your agent looks for skills:
 
 | Agent | Personal (all projects) | One project only |
@@ -58,8 +59,6 @@ it doesn't exist). You should end up with `…/skills/retrotink/SKILL.md`. On Wi
 
 To update later: `git pull` in the folder, or download the zip again. Or just ask your agent to update
 the retrotink skill.
-
-</details>
 
 ## What it does
 
