@@ -1,0 +1,47 @@
+#!/bin/sh
+# rtink launcher for macOS and Linux. Uses Node.js 18+ if installed; otherwise downloads the official
+# portable Node.js LTS from nodejs.org once (checked against its published SHA-256) into the cache folder
+# and uses that. Nothing is installed system-wide and no admin rights are needed.
+set -e
+
+HERE=$(cd "$(dirname "$0")" && pwd)
+NODE_LINE="${RTINK_NODE_LINE:-latest-v22.x}"
+
+if [ -n "$RTINK_CACHE" ]; then CACHE="$RTINK_CACHE"
+elif [ "$(uname -s)" = "Darwin" ]; then CACHE="$HOME/Library/Caches/retrotink"
+else CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/retrotink"; fi
+
+node_ok() { # usable if it runs and is v18 or newer
+  v=$("$1" -p 'process.versions.node.split(".")[0]' 2>/dev/null) || return 1
+  [ "$v" -ge 18 ] 2>/dev/null
+}
+
+NODE=""
+if command -v node >/dev/null 2>&1 && node_ok node; then NODE=node; fi
+if [ -z "$NODE" ]; then
+  for n in "$CACHE"/node/*/bin/node; do [ -x "$n" ] && node_ok "$n" && NODE="$n"; done
+fi
+
+if [ -z "$NODE" ]; then
+  case "$(uname -s)" in Darwin) OS=darwin ;; Linux) OS=linux ;; *) echo "unsupported OS: $(uname -s)" >&2; exit 1 ;; esac
+  case "$(uname -m)" in x86_64|amd64) ARCH=x64 ;; arm64|aarch64) ARCH=arm64 ;; armv7l) ARCH=armv7l ;; *) echo "unsupported CPU: $(uname -m)" >&2; exit 1 ;; esac
+  command -v curl >/dev/null 2>&1 || { echo "curl is needed to download Node.js" >&2; exit 1; }
+  BASE="https://nodejs.org/dist/$NODE_LINE"
+  echo "Node.js not found: downloading a private copy (one time, ~30 MB) from nodejs.org..." >&2
+  TMP=$(mktemp -d)
+  trap 'rm -rf "$TMP"' EXIT
+  curl -fsSL "$BASE/SHASUMS256.txt" -o "$TMP/SHASUMS256.txt"
+  FILE=$(grep -o "node-v[0-9.]*-$OS-$ARCH\.tar\.gz" "$TMP/SHASUMS256.txt" | head -n 1)
+  [ -n "$FILE" ] || { echo "no Node.js build for $OS-$ARCH in $BASE" >&2; exit 1; }
+  curl -fSL --progress-bar "$BASE/$FILE" -o "$TMP/$FILE"
+  WANT=$(grep " $FILE\$" "$TMP/SHASUMS256.txt" | cut -d' ' -f1)
+  if command -v sha256sum >/dev/null 2>&1; then GOT=$(sha256sum "$TMP/$FILE" | cut -d' ' -f1)
+  else GOT=$(shasum -a 256 "$TMP/$FILE" | cut -d' ' -f1); fi
+  [ "$WANT" = "$GOT" ] || { echo "Node.js download failed its checksum; not using it" >&2; exit 1; }
+  mkdir -p "$CACHE/node"
+  tar -xzf "$TMP/$FILE" -C "$CACHE/node"
+  NODE="$CACHE/node/${FILE%.tar.gz}/bin/node"
+  echo "Node.js ready: $NODE" >&2
+fi
+
+exec "$NODE" "$HERE/rtink.mjs" "$@"
