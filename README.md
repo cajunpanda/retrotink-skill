@@ -5,9 +5,32 @@ updates, profile editing, and answers to "what does this setting do?"
 
 ## Quick install
 
+Paste this into your AI coding agent (Claude Code, GitHub Copilot, Cursor, Codex, Gemini CLI…):
+
+```text
+Install the agent skill from https://github.com/cajunpanda/retrotink as a personal skill named
+"retrotink", so it's available in every project. Put it in your own skills folder, then run its
+self-test (scripts/rtink selftest, or scripts\rtink.cmd selftest on Windows) and tell me whether
+it worked.
+```
+
+Then start a new session and ask something like *"back up my RetroTINK SD card"* or *"what does Beam
+Spread do?"*.
+
+The first self-test may download a private copy of Node.js (~30 MB) if your computer doesn't have it.
+That's expected, and nothing is installed system-wide.
+
+**Claude.ai / Claude Desktop app:** download
+**[retrotink.zip](https://github.com/cajunpanda/retrotink/releases/latest/download/retrotink.zip)** and
+upload it under *Settings → Capabilities → Skills*. There Claude can answer setting and tuning questions
+from the bundled manual, but it can't reach your SD card; use a local agent for backups, firmware and
+profile edits.
+
+<details>
+<summary>Installing by hand</summary>
+
 It's one folder in the open [Agent Skills](https://agentskills.io) format (`SKILL.md` plus scripts).
-Put it where your agent looks for skills, then start a new session and ask something like *"back up my
-RetroTINK SD card"*.
+Put it where your agent looks for skills:
 
 | Agent | Personal (all projects) | One project only |
 |---|---|---|
@@ -33,11 +56,10 @@ from the latest release and unzip it into your agent's skills folder from the ta
 it doesn't exist). You should end up with `…/skills/retrotink/SKILL.md`. On Windows, `~` means
 `C:\Users\<you>`.
 
-**Claude.ai / Claude Desktop app:** upload that same `retrotink.zip` under *Settings → Capabilities →
-Skills*. There Claude can answer setting and tuning questions from the bundled manual, but it can't
-reach your SD card. Use a local agent from the table for backups, firmware and profile edits.
+To update later: `git pull` in the folder, or download the zip again. Or just ask your agent to update
+the retrotink skill.
 
-To update later: `git pull` in the folder, or download the zip again.
+</details>
 
 ## What it does
 
