@@ -17,6 +17,11 @@ Read this before staging firmware, or when the user asks "is there an update / d
   It takes about 40 s: the LED goes pink, then blue, then green. A **red blink** is an install error:
   recheck the card files. **Yellow flashes** at boot mean the bitstream that `rt4kup.bin` expects is
   missing.
+- **Over Wi-Fi (DonutShop):** `rtink net fw install [version|latest] --yes` does it all with the card in
+  the unit: writes the model's `.rbf`, then `rt4kup.bin` (last, since it names the bitstream), reads both
+  back and compares SHA-256, then runs the unit's own updater (`fwup check` returns a token,
+  `fwup go <token>` installs). The unit restarts and reports the new version in about 30–40 s. Dry run
+  without `--yes`. The previous `.rbf` stays on the card, unused. Tested 1.99.0 → 1.99.12 on a 4K CE.
 - Profiles, masks, CSC files, banners, modelines and input modes survive updates (they live on the card).
 - `rt4kup.bin` on the card is what's *staged*. It doesn't prove what's installed; that's on the unit's
   About screen.

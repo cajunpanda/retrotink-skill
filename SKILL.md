@@ -1,6 +1,6 @@
 ---
 name: retrotink
-description: Manage the SD card of a RetroTINK-4K, RetroTINK-4K CE or RetroTINK-6X video upscaler. Back up, verify, compare and restore the card; check for, download and stage firmware updates (with changelog relevance); and inspect, compare and edit .rt4 profiles setting by setting: scanlines, masks, kernels, HDR/PQ, crop, deinterlacer, ADC phase/gain. Also grafting a CRT look onto console profiles, Scalable Video Switch (SVS) auto-load profiles, and remote-button assignments (prof.map). Use whenever the user mentions a RetroTINK, RT4K, 4K CE, 6X, "the tink", their upscaler's SD card, .rt4 profiles, Wobbling Pixels or other community profile packs, SVS profiles, RetroTINK firmware, or asks things like "back up my card", "is there a new firmware", "what changed in my profile", "make my SNES look like a Trinitron", "why is 480i shaky", "assign profiles to the remote buttons". Use it even if they don't name the tool.
+description: Manage the SD card of a RetroTINK-4K, RetroTINK-4K CE or RetroTINK-6X video upscaler, either mounted on the computer or over Wi-Fi through a DonutShop bridge on the unit's USB-C port. Back up, verify, compare and restore the card; check for, download and stage firmware updates (with changelog relevance); and inspect, compare and edit .rt4 profiles setting by setting: scanlines, masks, kernels, HDR/PQ, crop, deinterlacer, ADC phase/gain. Also grafting a CRT look onto console profiles, Scalable Video Switch (SVS) auto-load profiles, and remote-button assignments (prof.map). Use whenever the user mentions a RetroTINK, RT4K, 4K CE, 6X, "the tink", their upscaler's SD card, .rt4 profiles, Wobbling Pixels or other community profile packs, SVS profiles, RetroTINK firmware, or asks things like "back up my card", "is there a new firmware", "what changed in my profile", "make my SNES look like a Trinitron", "why is 480i shaky", "assign profiles to the remote buttons", "DonutShop", "donutshop.local", "update the tink over Wi-Fi". Use it even if they don't name the tool.
 ---
 
 # RetroTINK SD card manager
@@ -68,21 +68,78 @@ Only suggest SVS profiles, button maps, HDR, BFI or a particular community pack 
 setup. When the setup is unknown and the task is small (e.g. "back up my card"), just do the safe part
 and ask afterwards.
 
+## Over Wi-Fi: DonutShop (use this when the user has one)
+
+A [DonutShop](https://github.com/svirant/DonutShop) is an ESP32-S3 on the RT4K's USB-C port that puts the
+unit on the network, so the SD card never leaves it. If `retrotink-setup.md` mentions one, or
+`rtink net info` answers, **work over the network and don't ask for the card.** The `net` commands talk
+to `donutshop.local` (or `--host <name|ip>`, or the `RTINK_HOST` environment variable). The RT4K must be
+on: standby doesn't answer.
+
+```
+rtink net info                         # unit, installed firmware, what's loaded, SVS profiles, baseline
+rtink net backup                       # back up profile/SVS: this becomes the new baseline
+rtink net diff                         # what changed on the unit since the baseline, setting by setting
+rtink net push <edited.rt4> "profile/SVS/S2_SNES….rt4" --yes   # write one file, read back and checked
+rtink net load "SVS/S2_SNES….rt4"      # load it now (otherwise it loads when the SVS selects that input)
+rtink net fw install latest --yes      # install firmware over Wi-Fi (see references/firmware.md)
+rtink net cmd "ver"                    # raw console command
+rtink net osd                          # what the on-screen menu shows right now, as text ("> " = selected)
+```
+`net osd` plus `net cmd "remote <key>"` (keys: menu, up, down, left, right, ok, back, prof1…) lets you
+see and drive the menu like the user does. Read the screen after every key. Use **left/right only when
+you mean to change a value**, put anything you changed back, and never "Save Current" unless asked.
+Leave the menu closed when done (`back` until `net osd` says no menu).
+
+Remote buttons over Wi-Fi: `rtink net buttons` shows them, `net buttons set 7 "Experiments/x.rt4" --yes`
+assigns one. **The unit reads the button map only when it starts**, so a new assignment works after a
+power off/on. For experiments, put a copy in `profile/Experiments/` (never a second `S<n>_` file in
+`profile/SVS`) on a spare button: the SVS profile stays untouched, and the switch reloads it whenever the
+console is turned on or the input changes. Probe with `net load` rather than pressing buttons: loading a
+profile changes what the user sees, so ask first if a console might be on.
+
+Power and input over Wi-Fi: `net cmd "remote pwr"` puts the unit in standby (it stops answering);
+`net cmd "pwr on"` wakes it (`pwr off` doesn't exist). After a wake it starts on HDMI with no profile,
+and with `z_keep_cur_input` = 1 on the card, loading a profile from a button or `net load` keeps that
+input. `net cmd "SVS NEW INPUT=<n>"` does what the switch does: loads `S<n>_…` with its own input.
+
+**The newest backup is the baseline.** Backups are `backups/net-*.zip` (plus a `.sha256` manifest), and
+the newest one is the reference for `diff`, `verify` and `push`:
+- Whatever the unit had when it was backed up counts as **intended**, including tuning done on the unit
+  itself. Don't treat a difference from older notes or older backups as something to fix.
+- Workflow for an edit: `net backup` → take the profile out of that zip → edit the copy (`profile set`,
+  `graft`…) → `profile diff` it → `net push --yes`.
+- `push` refuses when the unit's file changed since the baseline: the user tuned it on the unit after the
+  backup. Run `net diff` to see what they changed and tell them in a line ("you raised the SNES 480i gain"),
+  then `net backup` to make it the baseline and rebuild the edit from the new copy.
+- A successful push rolls the baseline forward by itself (`net-after-push-*.zip`), so the baseline
+  always matches the unit.
+
+**Scope is the SVS profiles.** Users change `profile/SVS/` (the per-input auto-load profiles), not the
+default or community profiles, so `net backup` covers only `profile/SVS` by default. That takes seconds;
+the whole card would take about half an hour over Wi-Fi. Use `--path <folder>` for anything else you
+must touch (e.g. `--path profile` for button profiles elsewhere), and `--all` for every profile.
+
+Speed: about 150 KB/s writing, 12–170 KB/s reading (small files are slow). There's no password on a
+DonutShop: it's for a trusted home network only.
+
 ## Ground rules (why they matter)
 
-1. **Back up before any write to the card:** `rtink card backup`. A card holds hours of hand
+1. **Back up before any write to the card:** `rtink card backup` (or `rtink net backup` over Wi-Fi). A card holds hours of hand
    calibration (gain, phase, crops) that exists nowhere else. Backups are a normal .zip plus a checksum
    file, so they open by double-click and can be restored with `card restore`.
 2. **The user edits profiles on the unit too.** Before rebuilding or bulk-editing anything, compare the
-   card against your last known copy (`card diff <last backup>`). Then build from the card's *current*
-   file, so their on-device tuning survives. Report what they changed; it's useful history.
+   card against your last known copy (`card diff <last backup>`, or `net diff` over Wi-Fi). Then build from
+   the card's *current* file, so their on-device tuning survives. Their on-device changes are intended:
+   report them in a line (useful history, and worth noting in `retrotink-setup.md`), then take a fresh
+   backup so they become the new baseline. Don't "correct" them back.
 3. **Change only what was asked, and show it.** After every edit, run `profile diff old new` and read the
    result back in plain words. "0 other bytes differ" means nothing unexpected changed.
 4. **Never overwrite a hand-tuned blend phase** (see the tuning guide). If unsure, diff first and keep
    theirs.
 5. Writes to the card need `--yes`. Run without it first: the dry run says exactly what will happen, so
    summarise that to the user.
-6. Leave the card mounted when you're done unless they ask otherwise, and remind them to **eject it
+6. (Card only) Leave the card mounted when you're done unless they ask otherwise, and remind them to **eject it
    safely** before pulling it. On Windows: the "Safely Remove Hardware" tray icon, or right-click the drive
    in File Explorer and choose Eject. On macOS: drag the card to the Trash/Eject icon, or click the eject
    arrow in Finder. Pulling it mid-write can corrupt the card.
@@ -180,7 +237,8 @@ Don't make the user dig through menus to report values you can read from the car
 the card over instead.
 
 ## Limits to be honest about
-- The settings map names 172 settings and was read off a 4K Pro on firmware 1.92. Settings it doesn't
+- The settings map names 172 settings read off a 4K Pro on firmware 1.92, plus 22 newer ones (Advanced
+  CRT Effects, Multi-frame Glow) from RetroTINK's WebCtl schema for 1.99.x. Settings it doesn't
   name are preserved but can't be shown or edited by name. Pro-only features (CRT Beam BFI, Horizontal
   Blur, Motion Adaptive tuning) don't exist on the CE or 6X even though the map lists some of them.
 - The `prof.map` power-up slot meaning is unconfirmed. Unknown bytes in diffs are mostly live signal
@@ -192,5 +250,6 @@ the card over instead.
 The condensed manual in `references/manual/` is adapted from the ConsoleMods RetroTINK-4K wiki
 (consolemods.org, CC BY 4.0): paraphrased and reorganized, live text as of 2026-10-12.
 The profile codec and settings map are vendored, unmodified, from Cruller
-(github.com/margaale/Cruller, GPL-3.0); see `vendor/cruller/SOURCE.md`. Maintainers can refresh them
+(github.com/margaale/Cruller, GPL-3.0); see `vendor/cruller/SOURCE.md`. The 1.99.x settings overlay comes from RetroTINK's WebCtl
+profile schema as served by DonutShop; see `vendor/webctl/SOURCE.md`. Maintainers can refresh them
 with `node scripts/update-vendor.mjs`. Firmware comes from RetroTINK's official repository.

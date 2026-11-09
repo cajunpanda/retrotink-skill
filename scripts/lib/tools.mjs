@@ -29,5 +29,12 @@ export function loadCodec() {
   if (!E || !E.parseProfile) throw new Error('vendor/cruller/editor.js does not expose window.editorInternals');
   const doc = JSON.parse(fs.readFileSync(path.join(VENDOR, 'rt4k_settings.json'), 'utf8'));
   const MAP = E.mapFor(doc, '');
+  // Settings newer than the Cruller map (firmware 1.99.x: Advanced CRT Effects, Multi-frame Glow), from
+  // vendor/webctl/ (see its SOURCE.md). Skipped if the Cruller map ever covers the same bytes.
+  const over = path.join(VENDOR, '..', 'webctl', 'rt4k_settings_overlay.json');
+  if (fs.existsSync(over)) {
+    const taken = new Set(MAP.settings.flatMap((x) => (x.bytes || []).flatMap(([o, l]) => Array.from({ length: l }, (_, k) => o + k))));
+    for (const x of JSON.parse(fs.readFileSync(over, 'utf8')).settings) if (!x.bytes.some(([o, l]) => Array.from({ length: l }, (_, k) => o + k).some((b) => taken.has(b)))) MAP.settings.push(x);
+  }
   return { E, MAP, S: MAP.settings, C: E.codecs(MAP.settings) };
 }

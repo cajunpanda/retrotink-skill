@@ -119,3 +119,51 @@ is what people remember as "sharp".
   same kernel on a SNES.
 - To get a CRT look on a console WP only ships "Sharp" for: `profile graft <WP sharp> <a CRT profile>
   <out>`. Geometry and sampling stay console-correct, and the look comes from the donor.
+
+## Advanced CRT Effects (firmware 1.99.7+, read off a 4K CE on 1.99.12)
+Menu: Advanced Settings › **Advanced CRT Effects** (between Processing/Effects and Color Correction).
+`rtink profile dump/diff/set` know these settings by name (see `profile-format.md`), and
+`rtink net osd` reads them live off the unit's menu.
+
+| Setting | Options / range | Default when enabled |
+|---|---|---|
+| Tube Shape | Flat · Cylindrical · Spherical | Flat |
+| Vertical Bow | number, with a cap shown per source, e.g. "60 (cap 2)" | 60 |
+| Horizontal Bow | Spherical only | 50 |
+| H. Convergence / V. Convergence | px / line (corner misconvergence, not the global R/B convergence) | 0.00 |
+| Bezel Style | Off (whole glass stage off) · On · Scatter (reflections, no visible bezel) · No Bezel (glass effects only) | Off |
+| Bezel Size | 4:3 · 16:9 · Crop (follows the profile's crop) | 4:3 |
+| Bezel Zoom | −30 % to +12 %, 1 % steps | +0 % |
+| Bezel Reflection | 0–200 % | 70 % |
+| Bezel Brightness | % | 40 % |
+| Glass Glow | 0–50 % (RetroTINK: realistic is well under 10 %) | 2.3 % |
+| Glow Blur | Normal · Extra | Normal |
+| Breathing | % (picture grows on bright scenes, shrinks on dark ones, like a real tube's sag) | 1.0 % |
+
+Composite Video (Encoding, Standard, Cycles/Line, Comb Filter, Lock Phase, Luma/Chroma Bandwidth, RF
+Noise) is **4K Pro only**; the CE page has no such section.
+
+What matters in practice:
+- **Curvature needs ordinary scanlines.** Energy Conservation (E-Conserve) scanlines don't support it,
+  and with scanlines off the curve disappears. Linear at strength 0 is a trick for curvature with no
+  visible scanlines.
+- **That costs brightness, and users notice.** E-Conserve widens the beam on bright pixels, so whites keep
+  full brightness; every other function darkens the gaps everywhere. Scanline **Input Gain only exists for
+  E-Conserve**, so it can't compensate. **Normalize Energy** (Processing/Effects › Scanline, present on
+  the 4K CE) helps but doesn't match E-Conserve's whites. One owner went back to E-Conserve and decided
+  to wait for curvature support rather than lose the brightness.
+- Glass glow lifts blacks: at HDR 1000 nits, 4–5 % already looks washed out. Try 0 % first to compare,
+  then 1–2 %.
+- Bezels look wrong on a flat picture to some owners: the bezel suggests a curved tube. Offer No Bezel
+  or Scatter when curvature is off.
+- Works best on 240p/480i with the CRT Simulation deinterlacer. 480p and Motion Adaptive 480i get a
+  smaller curvature range (the "cap").
+- **Cylindrical** is the Trinitron/PVM shape (straight on one axis). **Spherical** shows aliasing,
+  worst without scanlines.
+- HDR (or a linear-light mode) is needed for the glow and bezel light to look right.
+- Glass glow and bezel reflections show up most on dark backgrounds and bright highlights. Breathing is
+  most visible on a bright full screen.
+- A bezel is a static, lit image: on OLED, keep Bezel Brightness low or use Scatter / No Bezel for long
+  sessions.
+- Screenshots (1.99.9+): AUX 5 captures the input and AUX 6 the output, as PNGs in `screenshots/` on the
+  card (`net` can download them; input captures are small, 4K output PNGs are slow).

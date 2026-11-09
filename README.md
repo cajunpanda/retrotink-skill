@@ -69,6 +69,9 @@ the retrotink skill.
 ## What it does
 
 - **Backups:** zip + SHA-256 manifest of the whole card, verified on write; plus verify, diff and restore.
+- **Over Wi-Fi:** with a [DonutShop](https://github.com/svirant/DonutShop) bridge on the unit's USB-C port,
+  back up and diff the SVS profiles, push edited profiles, load them and install firmware without
+  removing the SD card (`rtink net …`).
 - **Firmware:** list packages, read the changelog since your version, then download and stage the right
   files for your model. Packages are checked against the SHA-256 RetroTINK publishes.
 - **Profiles (.rt4):** dump and diff by setting name, set values (per resolution or across all of them),
@@ -97,4 +100,5 @@ Code: GPL-3.0 (see `LICENSE`). `references/manual/`: CC BY 4.0, adapted from the
 [ConsoleMods RetroTINK-4K wiki](https://consolemods.org/wiki/AV:RetroTINK-4K) (paraphrased and
 reorganized). `vendor/cruller/` is vendored unmodified from
 [Cruller](https://github.com/margaale/Cruller) (GPL-3.0); its source commit is in
-`vendor/cruller/SOURCE.md`.
+`vendor/cruller/SOURCE.md`. `vendor/webctl/` adds the firmware 1.99.x settings (Advanced CRT Effects,
+Multi-frame Glow) from RetroTINK's WebCtl profile schema; see `vendor/webctl/SOURCE.md`.

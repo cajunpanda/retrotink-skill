@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// rtink: manage RetroTINK-4K / 4K CE / 6X SD cards: profiles, firmware, backups.
+// rtink: manage RetroTINK-4K / 4K CE / 6X SD cards: profiles, firmware, backups; or the unit itself over Wi-Fi via DonutShop.
 // Run through the launcher next to this file (scripts/rtink on macOS/Linux, scripts\rtink.cmd on Windows),
 // which finds Node.js or downloads a private portable copy first. Needs Node 18+, no npm packages.
 
@@ -9,6 +9,7 @@ import path from 'node:path';
 import { profileCmd } from './lib/profile.mjs';
 import { cardCmd, findCards } from './lib/card.mjs';
 import { fwCmd } from './lib/fw.mjs';
+import { netCmd } from './lib/net.mjs';
 import { loadCodec, vendorInfo } from './lib/tools.mjs';
 import { cacheDir, die } from './lib/util.mjs';
 import { readZip, writeZip } from './lib/zip.mjs';
@@ -29,6 +30,17 @@ fw    list [--channel experimental|release] [--n 8]          recent firmware pac
 fw    changelog [--since 1.99.0] [--n 3] [--channel ...]      what's new
 fw    download [version|latest] [--channel ...]               fetch + unpack into the cache
 fw    stage [version|latest] [card] [--model 4k|4kce|6x] [--prune] --yes   copy firmware onto the card
+
+net   info                                   over Wi-Fi via a DonutShop bridge (--host, RTINK_HOST, default donutshop.local)
+net   backup [--all | --path P ...] [--out DIR] [--label X]   back up profile/SVS + prof.map (default): the new baseline
+net   diff [baseline.zip] [--files-only]     what changed on the unit since the newest baseline, by setting
+net   verify [baseline.zip]                  does the unit still match the baseline?
+net   push <local file> <path on card> --yes write one file (refuses if the unit changed it since the baseline)
+net   buttons [set <1-12> <path under profile/> | clear <1-12>] --yes   remote button map over Wi-Fi
+net   load <path under profile/>             load a profile now (e.g. SVS/S2_SNES.rt4)
+net   osd [--plane 2]                        the on-screen menu as text (read-only)
+net   cmd "<console command>"                send a raw RT4K console command (e.g. ver)
+net   fw install [version|latest] [--channel ...] --yes   install firmware over Wi-Fi, verified
 
 profile check <files...>                     magic, size, CRC
 profile dump <f.rt4> [--json] [--all-modes]  every mapped setting, decoded
@@ -73,6 +85,7 @@ try {
   if (cmd === 'profile') await profileCmd(rest);
   else if (cmd === 'card') await cardCmd(rest);
   else if (cmd === 'fw') await fwCmd(rest);
+  else if (cmd === 'net') await netCmd(rest);
   else if (cmd === 'doctor') await doctor();
   else if (cmd === 'selftest') selftest();
   else console.log(HELP);

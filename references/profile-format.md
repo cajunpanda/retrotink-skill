@@ -61,3 +61,12 @@ of *their* console and cable. Never overwrite it when rebuilding; graft onto the
   options. Per the wiki they don't apply to SVS or DV1 auto-loads.
 - `modelines/custom1-4.txt`, `inputmodes/input_database.txt`, `mask/`, `csc/`, `image/`: user-editable
   text and bitmaps.
+
+## Firmware 1.99.x settings (overlay)
+The vendored Cruller map stops at firmware 1.92. `vendor/webctl/rt4k_settings_overlay.json` adds the
+**Advanced CRT Effects** page (Tube Shape, Vertical/Horizontal Bow, H./V. Convergence, Bezel Style/Size/
+Zoom/Reflection/Brightness, Glass Glow, Glow Blur, Breathing, and the 4K Pro's Composite Video) and BFI's
+**Multi-frame Glow**, from RetroTINK's WebCtl schema (see its SOURCE.md). They work with `dump`, `diff`,
+`set` and `find` like any other setting, at body offsets 9652–9678 and 9121. All zero bytes are the
+defaults (Flat, Off, glow 2.3 %, bow 60/50, reflection 70 %, brightness 40 %, breathing 1.0 %), which is
+what profiles saved before 1.99.7 contain. Normalize Energy was already in the Cruller map (body 564).

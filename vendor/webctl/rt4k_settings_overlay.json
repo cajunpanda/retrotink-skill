@@ -1,0 +1,659 @@
+{
+ "v": 1,
+ "source": "RetroTINK WebCtl profile schema (as served by DonutShop v0.8.3), converted to Cruller map format; body offsets",
+ "firmware": "1.99.12",
+ "settings": [
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Tube",
+   "label": "Tube Shape",
+   "bytes": [
+    [
+     9652,
+     1
+    ]
+   ],
+   "heading": "Tube",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Flat",
+     "00"
+    ],
+    [
+     "Cylindrical",
+     "01"
+    ],
+    [
+     "Spherical",
+     "02"
+    ]
+   ],
+   "round": true
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Tube",
+   "label": "Vertical Bow",
+   "bytes": [
+    [
+     9656,
+     2
+    ]
+   ],
+   "heading": "Tube",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0",
+     "c4ff"
+    ],
+    [
+     "100",
+     "2800"
+    ]
+   ],
+   "min": 0,
+   "max": 100,
+   "step": 1
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Tube",
+   "label": "Horizontal Bow",
+   "bytes": [
+    [
+     9658,
+     2
+    ]
+   ],
+   "heading": "Tube",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0",
+     "ceff"
+    ],
+    [
+     "300",
+     "fa00"
+    ]
+   ],
+   "min": 0,
+   "max": 300,
+   "step": 5
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Tube",
+   "label": "H. Convergence",
+   "bytes": [
+    [
+     9662,
+     2
+    ]
+   ],
+   "heading": "Tube",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0.00 px",
+     "0000"
+    ],
+    [
+     "0.50 px",
+     "f401"
+    ]
+   ],
+   "min": 0,
+   "max": 0.5,
+   "step": 0.01
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Tube",
+   "label": "V. Convergence",
+   "bytes": [
+    [
+     9664,
+     2
+    ]
+   ],
+   "heading": "Tube",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0.00 line",
+     "0000"
+    ],
+    [
+     "0.50 line",
+     "f401"
+    ]
+   ],
+   "min": 0,
+   "max": 0.5,
+   "step": 0.01
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Bezel Style",
+   "bytes": [
+    [
+     9653,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Off",
+     "00"
+    ],
+    [
+     "On",
+     "01"
+    ],
+    [
+     "Scatter",
+     "02"
+    ],
+    [
+     "No Bezel",
+     "03"
+    ]
+   ],
+   "round": true
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Bezel Size",
+   "bytes": [
+    [
+     9676,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "4:3",
+     "00"
+    ],
+    [
+     "16:9",
+     "01"
+    ],
+    [
+     "Crop",
+     "02"
+    ]
+   ],
+   "round": true
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Bezel Zoom",
+   "bytes": [
+    [
+     9678,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "-30%",
+     "e2"
+    ],
+    [
+     "+12%",
+     "0c"
+    ]
+   ],
+   "min": -30,
+   "max": 12,
+   "step": 1
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Bezel Reflection",
+   "bytes": [
+    [
+     9660,
+     2
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0%",
+     "baff"
+    ],
+    [
+     "200%",
+     "8200"
+    ]
+   ],
+   "min": 0,
+   "max": 200,
+   "step": 1
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Bezel Brightness",
+   "bytes": [
+    [
+     9677,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0%",
+     "d8"
+    ],
+    [
+     "100%",
+     "3c"
+    ]
+   ],
+   "min": 0,
+   "max": 100,
+   "step": 5
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Glass Glow",
+   "bytes": [
+    [
+     9654,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0%",
+     "fb"
+    ],
+    [
+     "0.4%",
+     "fc"
+    ],
+    [
+     "0.8%",
+     "fd"
+    ],
+    [
+     "1.2%",
+     "fe"
+    ],
+    [
+     "1.6%",
+     "ff"
+    ],
+    [
+     "2.3%",
+     "00"
+    ],
+    [
+     "3.1%",
+     "01"
+    ],
+    [
+     "4.7%",
+     "02"
+    ],
+    [
+     "6.3%",
+     "03"
+    ],
+    [
+     "9.4%",
+     "04"
+    ],
+    [
+     "12.5%",
+     "05"
+    ],
+    [
+     "18.8%",
+     "06"
+    ],
+    [
+     "25%",
+     "07"
+    ],
+    [
+     "37.5%",
+     "08"
+    ],
+    [
+     "50%",
+     "09"
+    ]
+   ],
+   "round": true
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Glow Blur",
+   "bytes": [
+    [
+     9655,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Normal",
+     "00"
+    ],
+    [
+     "Extra",
+     "01"
+    ]
+   ],
+   "round": true
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Bezel & Glass",
+   "label": "Breathing",
+   "bytes": [
+    [
+     9667,
+     1
+    ]
+   ],
+   "heading": "Bezel & Glass",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "0.0%",
+     "f6"
+    ],
+    [
+     "5.0%",
+     "28"
+    ]
+   ],
+   "min": 0,
+   "max": 5,
+   "step": 0.1
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Encoding",
+   "bytes": [
+    [
+     9668,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Off",
+     "00"
+    ],
+    [
+     "On",
+     "01"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Standard",
+   "bytes": [
+    [
+     9669,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "NTSC",
+     "00"
+    ],
+    [
+     "PAL",
+     "01"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Cycles/Line",
+   "bytes": [
+    [
+     9670,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "227.5 Standard / 283.7516 Standard",
+     "00"
+    ],
+    [
+     "227.333 NES/SNES / 285 Mega Drive",
+     "01"
+    ],
+    [
+     "228 Genesis / 284.167 NES/SNES",
+     "02"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Comb Filter",
+   "bytes": [
+    [
+     9671,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Notch",
+     "00"
+    ],
+    [
+     "1-Line Comb",
+     "01"
+    ],
+    [
+     "Adaptive Comb",
+     "02"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Lock Phase",
+   "bytes": [
+    [
+     9672,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Off",
+     "00"
+    ],
+    [
+     "On",
+     "01"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Luma Bandwidth",
+   "bytes": [
+    [
+     9673,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Full",
+     "00"
+    ],
+    [
+     "3.4 MHz",
+     "01"
+    ],
+    [
+     "2.5 MHz",
+     "02"
+    ],
+    [
+     "1.5 MHz",
+     "03"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "Chroma Bandwidth",
+   "bytes": [
+    [
+     9675,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "1.8 MHz",
+     "ff"
+    ],
+    [
+     "1.3 MHz",
+     "00"
+    ],
+    [
+     "1.0 MHz",
+     "01"
+    ],
+    [
+     "0.6 MHz",
+     "02"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Advanced CRT Effects Setup",
+   "section": "Composite Video",
+   "label": "RF Noise",
+   "bytes": [
+    [
+     9674,
+     1
+    ]
+   ],
+   "heading": "Composite Video",
+   "firmware": "1.99.7",
+   "values": [
+    [
+     "Off",
+     "00"
+    ],
+    [
+     "Light",
+     "01"
+    ],
+    [
+     "Medium",
+     "02"
+    ],
+    [
+     "Heavy",
+     "03"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  },
+  {
+   "path": "RetroTINK-4K Advanced Menu › Black Frame Insertion Setup",
+   "section": "Rolling BFI",
+   "label": "Multi-frame Glow",
+   "bytes": [
+    [
+     9121,
+     1
+    ]
+   ],
+   "heading": "Rolling BFI",
+   "values": [
+    [
+     "Off",
+     "00"
+    ],
+    [
+     "On",
+     "01"
+    ]
+   ],
+   "round": true,
+   "note": "4K Pro only"
+  }
+ ]
+}

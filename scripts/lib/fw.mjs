@@ -45,7 +45,7 @@ async function changelog(channel) {
 }
 
 // Download (cached) and unpack a package. Returns { version, dir, files }.
-async function fetchPackage(pkg) {
+export async function fetchPackage(pkg) {
   const dir = path.join(cacheDir(), 'firmware', pkg.version.replace(/[^\w.-]+/g, '_'));
   const zipFile = path.join(dir, path.basename(pkg.zip));
   if (!fs.existsSync(zipFile)) {
@@ -69,7 +69,7 @@ async function fetchPackage(pkg) {
   return { version: pkg.version, dir, files };
 }
 
-async function pick(channel, want) {
+export async function pick(channel, want) {
   const list = await packages(channel, want && want !== 'latest' ? 30 : 3);
   if (!list.length) die(`no packages found on the ${channel} channel`);
   if (!want || want === 'latest') return list[0];
